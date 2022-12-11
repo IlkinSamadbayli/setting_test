@@ -19,10 +19,20 @@ class _SignUpPageState extends State<SignUpPage> {
   late FocusNode nameFocus;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void populateField(SettingProvider provider) async {
+    SettingModel setting = await preferenceService.getSetting();
+    _usernameController.text = setting.name;
+    provider.isEmployed = setting.isEmployeer;
+    provider.selectedGender = setting.gender;
+    provider.selectedLanguage = setting.skills;
+  }
+
   @override
   void initState() {
     nameFocus = FocusNode();
     super.initState();
+    final provider = Provider.of<SettingProvider>(context, listen: false);
+    populateField(provider);
   }
 
   @override
@@ -168,7 +178,6 @@ class _SignUpPageState extends State<SignUpPage> {
       skills: provider.selectedLanguage,
       isEmployeer: provider.isEmployed,
     );
-    print(setModel);
     preferenceService.saveSetting(setModel);
   }
 }

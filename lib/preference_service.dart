@@ -12,5 +12,20 @@ class PreferenceService {
       "skill",
       settingModel.skills.map((skill) => skill.index.toString()).toList(),
     );
+    print("Saved settings");
+  }
+
+  Future<SettingModel> getSetting() async {
+    final preference = await SharedPreferences.getInstance();
+    final name = preference.getString("name")!;
+    final isEmployeer = preference.getBool("isEmployed")!;
+    final gender = Gender.values[preference.getInt("gender")!];
+    final programmingLanguage = preference.getStringList("skill");
+    final skills = programmingLanguage!
+        .map((e) => ProgrammingLanguage.values[int.parse(e)])
+        .toSet();
+
+    return SettingModel(
+        gender: gender, name: name, isEmployeer: isEmployeer, skills: skills);
   }
 }

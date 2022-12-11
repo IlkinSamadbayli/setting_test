@@ -4,11 +4,8 @@ enum Gender { male, female, other }
 enum ProgrammingLanguage {
   dart,
   flutter,
-  firebase,
   kotlin,
-  sharedPreference,
   cubit,
-  bloc,
   provider
 }
 
