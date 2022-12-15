@@ -19,6 +19,16 @@ class _SignUpPageState extends State<SignUpPage> {
   late FocusNode nameFocus;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+    void saveSetting({required SettingProvider provider}) {
+   final SettingModel setModel = SettingModel(
+      name: _usernameController.text,
+      gender: provider.selectedGender,
+      skills: provider.selectedLanguage,
+      isEmployeer: provider.isEmployed,
+    );
+    preferenceService.saveSetting(setModel);
+  }
+
   void populateField(SettingProvider provider) async {
     SettingModel setting = await preferenceService.getSetting();
     _usernameController.text = setting.name;
@@ -42,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: const Text("Setup Page"),
+          title: const Text("Setup Page",style: TextStyle(color: Colors.white),),
           centerTitle: true,
         ),
         body: GestureDetector(
@@ -52,13 +62,8 @@ class _SignUpPageState extends State<SignUpPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(30),
-                  child: Text(
-                    "Setup Page",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                ),
+         
+                const SizedBox(height: 30),
                 ListTile(
                   title: TextField(
                     controller: _usernameController,
@@ -153,13 +158,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 Padding(
                   padding: const EdgeInsets.all(30),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(16),
                     child: RawMaterialButton(
                         fillColor: Colors.blue,
                         onPressed: () => saveSetting(provider: settingProvider),
                         child: const Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Text("Save Settings"),
+                          padding: EdgeInsets.symmetric(vertical: 16,horizontal: 32),
+                          child: Text("Save Settings", style: TextStyle(color: Colors.white,fontSize: 20),),
                         )),
                   ),
                 )
@@ -171,13 +176,5 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  void saveSetting({required SettingProvider provider}) {
-    SettingModel setModel = SettingModel(
-      name: _usernameController.text,
-      gender: provider.selectedGender,
-      skills: provider.selectedLanguage,
-      isEmployeer: provider.isEmployed,
-    );
-    preferenceService.saveSetting(setModel);
-  }
+
 }

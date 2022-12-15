@@ -8,12 +8,12 @@ class PreferenceService {
     await sharedPreferences.setString("name", settingModel.name);
     await sharedPreferences.setInt("gender", settingModel.gender.index);
     await sharedPreferences.setBool("isEmployed", settingModel.isEmployeer);
-    await sharedPreferences.setStringList(
-      "skill",
-      settingModel.skills.map((skill) => skill.index.toString()).toList(),
-    );
+    await sharedPreferences.setStringList("skill",
+        settingModel.skills.map((skill) => skill.index.toString()).toList());
     print("Saved settings");
   }
+
+   
 
   Future<SettingModel> getSetting() async {
     final preference = await SharedPreferences.getInstance();
